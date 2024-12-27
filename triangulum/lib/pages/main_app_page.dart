@@ -10,7 +10,7 @@ class MainAppPage extends StatelessWidget {
         child: Center(
           child: Text(
             'Main App Page',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context).textTheme.displayMedium,
           ),
         ),
       ),
