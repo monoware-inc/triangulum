@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/welcome_header.dart';
+import '../widgets/search_bar_widget.dart';
 
 class MainAppPage extends StatelessWidget {
   const MainAppPage({super.key});
@@ -14,6 +15,8 @@ class MainAppPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               WelcomeHeader(),
+              SizedBox(height: 24),
+              SearchBarWidget(),
             ],
           ),
         ),
