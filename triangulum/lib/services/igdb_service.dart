@@ -111,4 +111,39 @@ class IGDBService {
       rethrow;
     }
   }
+
+  Future<List<Game>> getUpcomingGames() async {
+    try {
+      if (!_isTokenValid) {
+        await _generateAccessToken();
+      }
+
+      final response = await _dio.post(
+        '$_baseUrl/games',
+        data: '''
+          fields name, cover.url, first_release_date;
+          where first_release_date > ${DateTime.now().millisecondsSinceEpoch ~/ 1000} & cover != null;
+          sort first_release_date asc;
+          limit 10;
+        ''',
+        options: Options(
+          headers: {
+            'Client-ID': _clientId,
+            'Authorization': 'Bearer $_accessToken',
+            'Content-Type': 'text/plain',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((json) => Game.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to load upcoming games: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching upcoming games: $e');
+      rethrow;
+    }
+  }
 } 
