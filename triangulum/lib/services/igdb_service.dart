@@ -146,4 +146,42 @@ class IGDBService {
       rethrow;
     }
   }
+
+  Future<List<Game>> getNewReleases() async {
+    try {
+      if (!_isTokenValid) {
+        await _generateAccessToken();
+      }
+
+      final currentTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      final oneMonthAgo = currentTime - (30 * 24 * 60 * 60); // 30 days ago
+
+      final response = await _dio.post(
+        '$_baseUrl/games',
+        data: '''
+          fields name, cover.url, first_release_date;
+          where first_release_date >= $oneMonthAgo & first_release_date <= $currentTime & cover != null;
+          sort first_release_date desc;
+          limit 10;
+        ''',
+        options: Options(
+          headers: {
+            'Client-ID': _clientId,
+            'Authorization': 'Bearer $_accessToken',
+            'Content-Type': 'text/plain',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((json) => Game.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to load new releases: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching new releases: $e');
+      rethrow;
+    }
+  }
 } 
