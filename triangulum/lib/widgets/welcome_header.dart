@@ -5,19 +5,33 @@ class WelcomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Welcome back,',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        // TODO: Fetch user name from database
-        Text(
-          'user',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isDesktop = constraints.maxWidth > 900;
+        final isTablet = constraints.maxWidth > 600;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Welcome back',
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                fontSize: isDesktop ? 24 : (isTablet ? 20 : 16),
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
+            SizedBox(height: isDesktop ? 8 : 4),
+            // TODO: Fetch user name from database
+            Text(
+              'User',
+              style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                fontSize: isDesktop ? 48 : (isTablet ? 36 : 28),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 } 

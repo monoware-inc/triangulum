@@ -8,20 +8,37 @@ class MainAppPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              WelcomeHeader(),
-              SizedBox(height: 24),
-              SearchBarWidget(),
-              SizedBox(height: 32),
-              TrendingGamesWidget(),
-            ],
-          ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isDesktop = constraints.maxWidth > 900;
+            final isTablet = constraints.maxWidth > 600;
+            
+            return SingleChildScrollView(
+              child: Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: isDesktop ? 1200 : double.infinity,
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isDesktop ? 48 : (isTablet ? 24 : 16),
+                    vertical: isDesktop ? 32 : 24,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const WelcomeHeader(),
+                      SizedBox(height: isDesktop ? 32 : 24),
+                      const SearchBarWidget(),
+                      SizedBox(height: isDesktop ? 40 : 32),
+                      const TrendingGamesWidget(),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

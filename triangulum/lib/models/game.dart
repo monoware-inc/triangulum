@@ -12,10 +12,16 @@ class Game {
   });
 
   factory Game.fromJson(Map<String, dynamic> json) {
+    String? processedCoverUrl = json['cover']?['url'];
+    if (processedCoverUrl != null) {
+      // Convert relative URL to absolute and get larger image size
+      processedCoverUrl = 'https:${processedCoverUrl.replaceAll('thumb', 'cover_big')}';
+    }
+
     return Game(
       id: json['id'],
       name: json['name'],
-      coverUrl: json['cover']?['url'],
+      coverUrl: processedCoverUrl,
       rating: json['rating']?.toDouble(),
     );
   }

@@ -78,7 +78,7 @@ class IGDBService {
         '$_baseUrl/games',
         data: '''
           fields name, cover.url, rating, total_rating_count;
-          where total_rating_count != null & rating != null;
+          where cover != null & total_rating_count != null & rating != null;
           sort total_rating_count desc;
           limit 10;
         ''',
