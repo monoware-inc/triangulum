@@ -11,11 +11,19 @@ class Game {
     this.rating,
   });
 
+  String? getHighResolutionCoverUrl() {
+    if (coverUrl == null) return null;
+    // Convert to high-resolution version
+    return coverUrl!.replaceAll('thumb', 'cover_big');
+  }
+
   factory Game.fromJson(Map<String, dynamic> json) {
     String? processedCoverUrl = json['cover']?['url'];
     if (processedCoverUrl != null) {
-      // Convert relative URL to absolute and get larger image size
-      processedCoverUrl = 'https:${processedCoverUrl.replaceAll('thumb', 'cover_big')}';
+      // Ensure URL starts with https:
+      if (!processedCoverUrl.startsWith('https:')) {
+        processedCoverUrl = 'https:$processedCoverUrl';
+      }
     }
 
     return Game(
@@ -25,4 +33,19 @@ class Game {
       rating: json['rating']?.toDouble(),
     );
   }
+}
+
+enum ImageSize {
+  thumb('thumb'),
+  cover_small('cover_small'),
+  cover_big('cover_big'),
+  screenshot_med('screenshot_med'),
+  screenshot_big('screenshot_big'),
+  screenshot_huge('screenshot_huge'),
+  logo_med('logo_med'),
+  hd('720p'),
+  fullHd('1080p');
+
+  final String value;
+  const ImageSize(this.value);
 } 

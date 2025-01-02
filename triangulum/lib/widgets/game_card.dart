@@ -50,7 +50,7 @@ class GameCard extends StatelessWidget {
                   top: Radius.circular(12),
                 ),
                 child: Image.network(
-                  game.coverUrl!,
+                  game.getHighResolutionCoverUrl()!,
                   height: imageHeight,
                   width: double.infinity,
                   fit: BoxFit.cover,
