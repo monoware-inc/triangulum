@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/game.dart';
 import '../services/igdb_service.dart';
+import 'game_card.dart';
 
 class ComingSoonWidget extends StatefulWidget {
   const ComingSoonWidget({super.key});
@@ -77,58 +78,11 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
                           itemCount: _games.length,
                           itemBuilder: (context, index) {
                             final game = _games[index];
-                            return Container(
+                            return GameCard(
+                              game: game,
                               width: cardWidth,
-                              margin: const EdgeInsets.only(right: 16),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.surface,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (game.coverUrl != null)
-                                    ClipRRect(
-                                      borderRadius: const BorderRadius.vertical(
-                                        top: Radius.circular(12),
-                                      ),
-                                      child: Image.network(
-                                        game.coverUrl!,
-                                        height: imageHeight,
-                                        width: double.infinity,
-                                        fit: BoxFit.cover,
-                                        loadingBuilder: (context, child, progress) {
-                                          if (progress == null) return child;
-                                          return Container(
-                                            height: imageHeight,
-                                            color: Theme.of(context).colorScheme.surfaceVariant,
-                                            child: const Center(
-                                              child: CircularProgressIndicator(),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      game.name,
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                        fontSize: titleSize,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              imageHeight: imageHeight,
+                              titleSize: titleSize,
                             );
                           },
                         ),
