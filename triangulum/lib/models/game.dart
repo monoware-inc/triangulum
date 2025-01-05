@@ -2,13 +2,13 @@ class Game {
   final int id;
   final String name;
   final String? coverUrl;
-  final String? description;
+  final String? summary;
 
   Game({
     required this.id,
     required this.name,
     this.coverUrl,
-    this.description,
+    this.summary,
   });
 
   String? getHighResolutionCoverUrl() {
@@ -24,7 +24,7 @@ class Game {
       coverUrl: json['cover']?['url'] != null 
           ? 'https:${json['cover']['url']}' 
           : null,
-      description: json['summary'],
+      summary: json['summary'],
     );
   }
 }

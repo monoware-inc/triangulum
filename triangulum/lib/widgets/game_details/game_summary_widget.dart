@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class GameDescription extends StatelessWidget {
-  final String description;
+class GameSummary extends StatelessWidget {
+  final String summary;
 
-  const GameDescription({
+  const GameSummary({
     super.key,
-    required this.description,
+    required this.summary,
   });
 
   @override
@@ -19,7 +19,7 @@ class GameDescription extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Description',
+              'Summary',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontSize: isDesktop ? 24 : (isTablet ? 22 : 20),
                 fontWeight: FontWeight.bold,
@@ -27,7 +27,7 @@ class GameDescription extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              description,
+              summary,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 fontSize: isDesktop ? 16 : (isTablet ? 15 : 14),
                 height: 1.5,

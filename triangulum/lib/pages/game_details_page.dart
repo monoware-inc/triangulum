@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/game.dart';
 import '../widgets/game_details/game_cover_header_widget.dart';
 import '../widgets/game_details/game_name_header_widget.dart';
-import '../widgets/game_details/game_description_widget.dart';
+import '../widgets/game_details/game_summary_widget.dart';
 
 class GameDetailsPage extends StatelessWidget {
   final Game game;
@@ -38,8 +38,8 @@ class GameDetailsPage extends StatelessWidget {
                     children: [
                       GameNameHeader(name: game.name),
                       const SizedBox(height: 32),
-                      if (game.description != null)
-                        GameDescription(description: game.description!),
+                      if (game.summary != null)
+                        GameSummary(summary: game.summary!),
                     ],
                   ),
                 ),
