@@ -4,6 +4,7 @@ import '../widgets/search_bar_widget.dart';
 import '../widgets/trending_games_widget.dart';
 import '../widgets/coming_soon_widget.dart';
 import '../widgets/new_releases_widget.dart';
+import '../widgets/popular_games_widget.dart';
 
 class MainAppPage extends StatelessWidget {
   const MainAppPage({super.key});
@@ -35,12 +36,13 @@ class MainAppPage extends StatelessWidget {
                       SizedBox(height: isDesktop ? 32 : 24),
                       const SearchBarWidget(),
                       SizedBox(height: isDesktop ? 40 : 32),
+                      const PopularGamesWidget(),
+                      SizedBox(height: isDesktop ? 40 : 32),
                       const TrendingGamesWidget(),
                       SizedBox(height: isDesktop ? 40 : 32),
                       const NewReleasesWidget(),
                       SizedBox(height: isDesktop ? 40 : 32),
                       const ComingSoonWidget(),
-                      SizedBox(height: isDesktop ? 40 : 32),
                     ],
                   ),
                 ),

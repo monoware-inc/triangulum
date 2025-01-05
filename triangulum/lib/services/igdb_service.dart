@@ -184,4 +184,39 @@ class IGDBService {
       rethrow;
     }
   }
+
+  Future<List<Game>> getPopularGames() async {
+    try {
+      if (!_isTokenValid) {
+        await _generateAccessToken();
+      }
+
+      final response = await _dio.post(
+        '$_baseUrl/games',
+        data: '''
+          fields name, cover.url, summary;
+          where rating_count > 100 & cover != null;
+          sort total_rating desc;
+          limit 10;
+        ''',
+        options: Options(
+          headers: {
+            'Client-ID': _clientId,
+            'Authorization': 'Bearer $_accessToken',
+            'Content-Type': 'text/plain',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((json) => Game.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to load popular games: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching popular games: $e');
+      rethrow;
+    }
+  }
 } 
