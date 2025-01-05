@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/game.dart';
 import '../services/igdb_service.dart';
-import 'game_card.dart';
+import 'game_card_widget.dart';
 
 class ComingSoonWidget extends StatefulWidget {
   const ComingSoonWidget({super.key});

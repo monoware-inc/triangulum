@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   http: ^1.2.0
   dio: ^5.4.0
+  palette_generator: ^0.3.3
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/welcome_header.dart';
+import '../widgets/welcome_header_widget.dart';
 import '../widgets/search_bar_widget.dart';
 import '../widgets/trending_games_widget.dart';
 import '../widgets/coming_soon_widget.dart';

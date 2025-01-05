@@ -77,7 +77,7 @@ class IGDBService {
       final response = await _dio.post(
         '$_baseUrl/games',
         data: '''
-          fields name, cover.url, rating, total_rating_count;
+          fields name, cover.url, rating, total_rating_count, summary;
           where cover != null & total_rating_count != null & rating != null;
           sort total_rating_count desc;
           limit 10;
@@ -121,7 +121,7 @@ class IGDBService {
       final response = await _dio.post(
         '$_baseUrl/games',
         data: '''
-          fields name, cover.url, first_release_date;
+          fields name, cover.url, first_release_date, summary;
           where first_release_date > ${DateTime.now().millisecondsSinceEpoch ~/ 1000} & cover != null;
           sort first_release_date asc;
           limit 10;
@@ -159,7 +159,7 @@ class IGDBService {
       final response = await _dio.post(
         '$_baseUrl/games',
         data: '''
-          fields name, cover.url, first_release_date;
+          fields name, cover.url, first_release_date, summary;
           where first_release_date >= $oneMonthAgo & first_release_date <= $currentTime & cover != null;
           sort first_release_date desc;
           limit 10;

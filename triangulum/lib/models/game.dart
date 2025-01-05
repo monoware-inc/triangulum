@@ -2,13 +2,13 @@ class Game {
   final int id;
   final String name;
   final String? coverUrl;
-  final double? rating;
+  final String? description;
 
   Game({
     required this.id,
     required this.name,
     this.coverUrl,
-    this.rating,
+    this.description,
   });
 
   String? getHighResolutionCoverUrl() {
@@ -18,19 +18,13 @@ class Game {
   }
 
   factory Game.fromJson(Map<String, dynamic> json) {
-    String? processedCoverUrl = json['cover']?['url'];
-    if (processedCoverUrl != null) {
-      // Ensure URL starts with https:
-      if (!processedCoverUrl.startsWith('https:')) {
-        processedCoverUrl = 'https:$processedCoverUrl';
-      }
-    }
-
     return Game(
       id: json['id'],
       name: json['name'],
-      coverUrl: processedCoverUrl,
-      rating: json['rating']?.toDouble(),
+      coverUrl: json['cover']?['url'] != null 
+          ? 'https:${json['cover']['url']}' 
+          : null,
+      description: json['summary'],
     );
   }
 }
