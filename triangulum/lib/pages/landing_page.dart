@@ -1,20 +1,115 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'main_app_page.dart';
+import '../services/auth_service.dart';
+import '../widgets/auth/email_auth_dialog.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
 
-  Future<void> _markLandingAsSeen(BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('hasSeenLanding', true);
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  final AuthService _authService = AuthService();
+  final Map<String, bool> _loadingStates = {
+    'google': false,
+    'apple': false,
+    'twitch': false,
+    'email': false,
+  };
+
+  void _setLoading(String provider, bool isLoading) {
+    setState(() {
+      _loadingStates[provider] = isLoading;
+    });
+  }
+
+  void _handleAuthError(BuildContext context, String error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error),
+        backgroundColor: Theme.of(context).colorScheme.error,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  Future<void> _handleGoogleSignIn(BuildContext context) async {
+    _setLoading('google', true);
+    final (_, error) = await _authService.signInWithGoogle();
     
     if (!context.mounted) return;
+    _setLoading('google', false);
+
+    if (error != null) {
+      _handleAuthError(context, error);
+    }
+    // AuthState handles navigation automatically
+  }
+
+  Future<void> _handleAppleSignIn(BuildContext context) async {
+    _setLoading('apple', true);
+    final (_, error) = await _authService.signInWithApple();
     
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const MainAppPage(),
+    if (!context.mounted) return;
+    _setLoading('apple', false);
+
+    if (error != null) {
+      _handleAuthError(context, error);
+    }
+  }
+
+  Future<void> _handleTwitchSignIn(BuildContext context) async {
+    _setLoading('twitch', true);
+    // TODO: Implement Twitch auth
+    _setLoading('twitch', false);
+    
+    if (!context.mounted) return;
+    _handleAuthError(context, 'Twitch sign-in not implemented yet');
+  }
+
+  Future<void> _handleEmailAuth(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => EmailAuthDialog(
+        title: 'Sign In',
+        submitButtonText: 'Sign In',
+        onSubmit: (email, password) async {
+          final (_, error) = await _authService.signInWithEmail(email, password);
+          
+          if (!context.mounted) return;
+          Navigator.pop(context); // Close dialog
+
+          if (error != null) {
+            _handleAuthError(context, error);
+            if (error.contains('user-not-found')) {
+              _showSignUpDialog(context, email, password);
+            }
+          }
+          // AuthState handles navigation
+        },
+      ),
+    );
+  }
+
+  void _showSignUpDialog(BuildContext context, String email, String password) {
+    showDialog(
+      context: context,
+      builder: (context) => EmailAuthDialog(
+        title: 'Create Account',
+        submitButtonText: 'Sign Up',
+        onSubmit: (email, password) async {
+          final (_, error) = await _authService.signUpWithEmail(email, password);
+          
+          if (!context.mounted) return;
+          Navigator.pop(context);
+
+          if (error != null) {
+            _handleAuthError(context, error);
+          }
+          // AuthState handles navigation
+        },
       ),
     );
   }
@@ -85,22 +180,26 @@ class LandingPage extends StatelessWidget {
                             _buildAuthButton(
                               context,
                               const FaIcon(FontAwesomeIcons.google, size: 24),
-                              () => _markLandingAsSeen(context),
+                              () => _handleGoogleSignIn(context),
+                              'google',
                             ),
                             _buildAuthButton(
                               context,
                               const FaIcon(FontAwesomeIcons.apple, size: 24),
-                              () => _markLandingAsSeen(context),
+                              () => _handleAppleSignIn(context),
+                              'apple',
                             ),
                             _buildAuthButton(
                               context,
                               const FaIcon(FontAwesomeIcons.twitch, size: 24),
-                              () => _markLandingAsSeen(context),
+                              () => _handleTwitchSignIn(context),
+                              'twitch',
                             ),
                             _buildAuthButton(
                               context,
                               const Icon(Icons.email, size: 24),
-                              () => _markLandingAsSeen(context),
+                              () => _handleEmailAuth(context),
+                              'email',
                             ),
                           ],
                         ),
@@ -121,6 +220,7 @@ class LandingPage extends StatelessWidget {
     BuildContext context,
     Widget icon,
     VoidCallback onPressed,
+    String provider,
   ) {
     return ElevatedButton(
       onPressed: onPressed,
@@ -133,7 +233,9 @@ class LandingPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      child: Center(child: icon),
+      child: Center(
+        child: icon,
+      ),
     );
   }
 } 

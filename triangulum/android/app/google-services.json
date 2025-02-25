@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "167248948966",
+    "project_id": "triangulum-c55f1",
+    "storage_bucket": "triangulum-c55f1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167248948966:android:7c79632657b85ea21f1527",
+        "android_client_info": {
+          "package_name": "com.example.triangulum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167248948966-19qdavlo8n8of89cubqcaadr7jf2detd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAweLBJwL9axmSNR3fmCbxMM4LSOCod0uU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167248948966-19qdavlo8n8of89cubqcaadr7jf2detd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

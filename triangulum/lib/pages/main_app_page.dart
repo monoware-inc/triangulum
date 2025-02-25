@@ -5,6 +5,7 @@ import '../widgets/trending_games_widget.dart';
 import '../widgets/coming_soon_widget.dart';
 import '../widgets/new_releases_widget.dart';
 import '../widgets/popular_games_widget.dart';
+import '../pages/profile_page.dart';
 
 class MainAppPage extends StatelessWidget {
   const MainAppPage({super.key});
@@ -12,6 +13,22 @@ class MainAppPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Triangulum'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProfilePage(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {

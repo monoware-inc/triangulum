@@ -3,9 +3,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/landing_page.dart';
 import 'pages/main_app_page.dart';
 import 'theme/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:provider/provider.dart';
+import 'providers/auth_state.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AuthState(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +31,19 @@ class MyApp extends StatelessWidget {
       title: 'Triangulum',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: const InitialPage(),
+      home: Consumer<AuthState>(
+        builder: (context, authState, _) {
+          if (!authState.isInitialized) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          
+          if (authState.isAuthenticated) {
+            return const MainAppPage();
+          }
+          
+          return const LandingPage();
+        },
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
