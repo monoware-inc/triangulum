@@ -14,6 +14,7 @@ dependencies:
   http: ^1.2.0
   dio: ^5.4.0
   palette_generator: ^0.3.3
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_test:
