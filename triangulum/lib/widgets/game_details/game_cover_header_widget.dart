@@ -21,13 +21,13 @@ class GameCoverHeader extends StatelessWidget {
         background: Stack(
           fit: StackFit.expand,
           children: [
-            // Grey blurred background
+            // Background with blur
             Container(
-              color: const Color.fromARGB(255, 126, 133, 142),
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                 child: Container(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.surface.withOpacity(0.1),
                 ),
               ),
             ),
@@ -40,7 +40,7 @@ class GameCoverHeader extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
                       blurRadius: 20,
                       offset: const Offset(0, 10),
                     ),
@@ -56,18 +56,21 @@ class GameCoverHeader extends StatelessWidget {
                             if (loadingProgress == null) return child;
                             return Container(
                               color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                              child: const Center(
-                                child: CircularProgressIndicator(),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                               ),
                             );
                           },
                           errorBuilder: (context, error, stackTrace) {
                             return Container(
                               color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                              child: const Center(
+                              child: Center(
                                 child: Icon(
                                   Icons.error_outline,
                                   size: 48,
+                                  color: Theme.of(context).colorScheme.error,
                                 ),
                               ),
                             );
@@ -83,7 +86,10 @@ class GameCoverHeader extends StatelessWidget {
         ),
       ),
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
+        icon: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
         onPressed: () => Navigator.pop(context),
       ),
     );

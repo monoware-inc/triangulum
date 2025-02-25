@@ -59,6 +59,7 @@ class _PopularGamesWidgetState extends State<PopularGamesWidget> {
                 'Popular',
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
                   fontSize: isDesktop ? 32.0 : (isTablet ? 28.0 : 24.0),
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ),
@@ -66,9 +67,20 @@ class _PopularGamesWidgetState extends State<PopularGamesWidget> {
             SizedBox(
               height: imageHeight + 60,
               child: _isLoading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    )
                   : _error != null
-                      ? Center(child: Text('Error: $_error'))
+                      ? Center(
+                          child: Text(
+                            'Error: $_error',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                        )
                       : ListView.builder(
                           padding: EdgeInsets.symmetric(
                             horizontal: isDesktop ? 24.0 : 16.0,

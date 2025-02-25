@@ -35,7 +35,7 @@ class GameCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -59,8 +59,10 @@ class GameCard extends StatelessWidget {
                     return Container(
                       height: imageHeight,
                       color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                      child: const Center(
-                        child: CircularProgressIndicator(),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     );
                   },

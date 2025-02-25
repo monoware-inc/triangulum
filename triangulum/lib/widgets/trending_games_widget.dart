@@ -42,7 +42,6 @@ class _TrendingGamesWidgetState extends State<TrendingGamesWidget> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Responsive calculations
         final isDesktop = constraints.maxWidth > 900;
         final isTablet = constraints.maxWidth > 600;
         final cardWidth = isDesktop ? 200.0 : (isTablet ? 160.0 : 140.0);
@@ -60,16 +59,28 @@ class _TrendingGamesWidgetState extends State<TrendingGamesWidget> {
                 'Trending',
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
                   fontSize: isDesktop ? 32.0 : (isTablet ? 28.0 : 24.0),
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ),
             const SizedBox(height: 16),
             SizedBox(
-              height: imageHeight + 60, // Height for image + text + padding
+              height: imageHeight + 60,
               child: _isLoading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    )
                   : _error != null
-                      ? Center(child: Text('Error: $_error'))
+                      ? Center(
+                          child: Text(
+                            'Error: $_error',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                        )
                       : ListView.builder(
                           padding: EdgeInsets.symmetric(
                             horizontal: isDesktop ? 24.0 : 16.0,
