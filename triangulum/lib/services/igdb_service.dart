@@ -24,7 +24,6 @@ class IGDBService {
 
   Future<void> _generateAccessToken() async {
     try {
-      print('Generating access token...');
       final response = await _dio.post(
         'https://id.twitch.tv/oauth2/token',
         queryParameters: {
@@ -32,16 +31,7 @@ class IGDBService {
           'client_secret': _clientSecret,
           'grant_type': 'client_credentials',
         },
-        options: Options(
-          validateStatus: (status) => true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        ),
       );
-
-      print('Token response status: ${response.statusCode}');
-      print('Token response: ${response.data}');
 
       if (response.statusCode == 200) {
         _accessToken = response.data['access_token'];
@@ -49,15 +39,9 @@ class IGDBService {
           Duration(seconds: response.data['expires_in']),
         );
       } else {
-        throw Exception('Failed to generate token: ${response.statusCode} - ${response.data}');
+        throw Exception('Failed to generate access token');
       }
-    } on DioException catch (e) {
-      print('Dio error type: ${e.type}');
-      print('Dio error message: ${e.message}');
-      print('Dio error response: ${e.response}');
-      rethrow;
     } catch (e) {
-      print('Error generating token: $e');
       rethrow;
     }
   }
@@ -71,8 +55,6 @@ class IGDBService {
       if (_accessToken == null) {
         throw Exception('No access token available');
       }
-
-      print('Using access token: $_accessToken');
       
       final response = await _dio.post(
         '$_baseUrl/games',
@@ -92,22 +74,13 @@ class IGDBService {
         ),
       );
 
-      print('Games response status: ${response.statusCode}');
-      print('Games response: ${response.data}');
-
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
         return data.map((json) => Game.fromJson(json)).toList();
       } else {
-        throw Exception('Failed to load games: ${response.statusCode} - ${response.data}');
+        throw Exception('Failed to load games: ${response.statusCode}');
       }
-    } on DioException catch (e) {
-      print('Dio error type: ${e.type}');
-      print('Dio error message: ${e.message}');
-      print('Dio error response: ${e.response}');
-      rethrow;
     } catch (e) {
-      print('Error fetching games: $e');
       rethrow;
     }
   }
@@ -142,7 +115,6 @@ class IGDBService {
         throw Exception('Failed to load upcoming games: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching upcoming games: $e');
       rethrow;
     }
   }
@@ -180,7 +152,6 @@ class IGDBService {
         throw Exception('Failed to load new releases: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching new releases: $e');
       rethrow;
     }
   }
@@ -215,7 +186,6 @@ class IGDBService {
         throw Exception('Failed to load popular games: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching popular games: $e');
       rethrow;
     }
   }

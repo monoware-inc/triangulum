@@ -31,7 +31,6 @@ class _PopularGamesWidgetState extends State<PopularGamesWidget> {
         _error = null;
       });
     } catch (e) {
-      print('Error in widget: $e');
       setState(() {
         _isLoading = false;
         _error = e.toString();

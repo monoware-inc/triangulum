@@ -31,7 +31,6 @@ class _NewReleasesWidgetState extends State<NewReleasesWidget> {
         _error = null;
       });
     } catch (e) {
-      print('Error in widget: $e');
       setState(() {
         _isLoading = false;
         _error = e.toString();

@@ -58,7 +58,7 @@ class GameCard extends StatelessWidget {
                     if (progress == null) return child;
                     return Container(
                       height: imageHeight,
-                      color: Theme.of(context).colorScheme.surfaceVariant,
+                      color: Theme.of(context).colorScheme.surfaceContainerHighest,
                       child: const Center(
                         child: CircularProgressIndicator(),
                       ),

@@ -31,12 +31,12 @@ class Game {
 
 enum ImageSize {
   thumb('thumb'),
-  cover_small('cover_small'),
-  cover_big('cover_big'),
-  screenshot_med('screenshot_med'),
-  screenshot_big('screenshot_big'),
-  screenshot_huge('screenshot_huge'),
-  logo_med('logo_med'),
+  coverSmall('cover_small'),
+  coverBig('cover_big'),
+  screenshotMed('screenshot_med'),
+  screenshotBig('screenshot_big'),
+  screenshotHuge('screenshot_huge'),
+  logoMed('logo_med'),
   hd('720p'),
   fullHd('1080p');
 

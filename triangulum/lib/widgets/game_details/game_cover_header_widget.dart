@@ -23,7 +23,7 @@ class GameCoverHeader extends StatelessWidget {
           children: [
             // Grey blurred background
             Container(
-              color: Color.fromARGB(255, 126, 133, 142),
+              color: const Color.fromARGB(255, 126, 133, 142),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                 child: Container(
@@ -55,7 +55,7 @@ class GameCoverHeader extends StatelessWidget {
                           loadingBuilder: (context, child, loadingProgress) {
                             if (loadingProgress == null) return child;
                             return Container(
-                              color: Theme.of(context).colorScheme.surfaceVariant,
+                              color: Theme.of(context).colorScheme.surfaceContainerHighest,
                               child: const Center(
                                 child: CircularProgressIndicator(),
                               ),
@@ -63,7 +63,7 @@ class GameCoverHeader extends StatelessWidget {
                           },
                           errorBuilder: (context, error, stackTrace) {
                             return Container(
-                              color: Theme.of(context).colorScheme.surfaceVariant,
+                              color: Theme.of(context).colorScheme.surfaceContainerHighest,
                               child: const Center(
                                 child: Icon(
                                   Icons.error_outline,
@@ -74,7 +74,7 @@ class GameCoverHeader extends StatelessWidget {
                           },
                         )
                       : Container(
-                          color: Theme.of(context).colorScheme.surfaceVariant,
+                          color: Theme.of(context).colorScheme.surfaceContainerHighest,
                         ),
                 ),
               ),
