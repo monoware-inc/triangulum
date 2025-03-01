@@ -25,12 +25,14 @@ class _TrendingGamesWidgetState extends State<TrendingGamesWidget> {
   Future<void> _loadGames() async {
     try {
       final games = await _igdbService.getTrendingGames();
+      if (!mounted) return;
       setState(() {
         _games = games;
         _isLoading = false;
         _error = null;
       });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _isLoading = false;
         _error = e.toString();

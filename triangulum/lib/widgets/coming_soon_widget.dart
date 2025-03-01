@@ -25,12 +25,14 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
   Future<void> _loadGames() async {
     try {
       final games = await _igdbService.getUpcomingGames();
+      if (!mounted) return;
       setState(() {
         _games = games;
         _isLoading = false;
         _error = null;
       });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _isLoading = false;
         _error = e.toString();

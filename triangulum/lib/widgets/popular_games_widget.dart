@@ -25,12 +25,14 @@ class _PopularGamesWidgetState extends State<PopularGamesWidget> {
   Future<void> _loadGames() async {
     try {
       final games = await _igdbService.getPopularGames();
+      if (!mounted) return;
       setState(() {
         _games = games;
         _isLoading = false;
         _error = null;
       });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _isLoading = false;
         _error = e.toString();
