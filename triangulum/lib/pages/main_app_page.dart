@@ -6,6 +6,8 @@ import '../widgets/coming_soon_widget.dart';
 import '../widgets/new_releases_widget.dart';
 import '../widgets/popular_games_widget.dart';
 import '../pages/profile_page.dart';
+import '../pages/library_page.dart';
+import '../widgets/bottom_nav_bar_widget.dart';
 
 class MainAppPage extends StatefulWidget {
   const MainAppPage({super.key});
@@ -19,6 +21,7 @@ class _MainAppPageState extends State<MainAppPage> {
 
   final List<Widget> _pages = [
     const _MainContent(),
+    const LibraryPage(),
     const ProfilePage(),
   ];
 
@@ -26,30 +29,13 @@ class _MainAppPageState extends State<MainAppPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: BottomNavBarWidget(
         selectedIndex: _selectedIndex,
         onDestinationSelected: (int index) {
           setState(() {
             _selectedIndex = index;
           });
         },
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 3,
-        shadowColor: Theme.of(context).colorScheme.shadow,
-        indicatorColor: Theme.of(context).colorScheme.primaryContainer,
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.explore_outlined),
-            selectedIcon: Icon(Icons.explore),
-            label: '',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: '',
-          ),
-        ],
       ),
     );
   }
