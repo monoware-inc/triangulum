@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/welcome_header_widget.dart';
 import '../widgets/search_bar_widget.dart';
 import '../widgets/trending_games_widget.dart';
 import '../widgets/coming_soon_widget.dart';
@@ -66,8 +65,6 @@ class _MainContent extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const WelcomeHeader(),
-                    SizedBox(height: isDesktop ? 32 : 24),
                     const SearchBarWidget(),
                     SizedBox(height: isDesktop ? 40 : 32),
                     const PopularGamesWidget(),
