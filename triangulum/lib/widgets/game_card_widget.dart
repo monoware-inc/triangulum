@@ -27,59 +27,50 @@ class GameCard extends StatelessWidget {
           ),
         );
       },
-      child: Container(
-        width: width,
-        margin: const EdgeInsets.only(right: 16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (game.coverUrl != null)
+      child: Padding(
+        padding: const EdgeInsets.only(right: 16.0),
+        child: SizedBox(
+          width: width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
+                borderRadius: BorderRadius.circular(24.0),
                 child: Image.network(
-                  game.getHighResolutionCoverUrl()!,
+                  (game.coverUrl != null) 
+                      ? game.coverUrl!.replaceAll('t_thumb', 't_cover_big')
+                      : 'https://placeholder.com/no-image',
+                  width: width,
                   height: imageHeight,
-                  width: double.infinity,
                   fit: BoxFit.cover,
-                  loadingBuilder: (context, child, progress) {
-                    if (progress == null) return child;
+                  errorBuilder: (context, error, stackTrace) {
                     return Container(
+                      width: width,
                       height: imageHeight,
-                      color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                      color: Theme.of(context).colorScheme.surfaceVariant,
+                      child: Icon(
+                        Icons.error_outline,
+                        size: 32.0,
+                        color: Theme.of(context).colorScheme.error,
                       ),
                     );
                   },
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                game.name,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: titleSize,
+              const SizedBox(height: 8),
+              Expanded(
+                child: Text(
+                  game.name,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: titleSize,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

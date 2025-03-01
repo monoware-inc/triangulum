@@ -46,61 +46,43 @@ class _PopularGamesWidgetState extends State<PopularGamesWidget> {
       builder: (context, constraints) {
         final isDesktop = constraints.maxWidth > 900;
         final isTablet = constraints.maxWidth > 600;
-        final cardWidth = isDesktop ? 200.0 : (isTablet ? 160.0 : 140.0);
-        final imageHeight = isDesktop ? 240.0 : (isTablet ? 200.0 : 160.0);
-        final titleSize = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
+        final cardWidth = isDesktop ? 400.0 : (isTablet ? 320.0 : 280.0);
+        final imageHeight = isDesktop ? 480.0 : (isTablet ? 400.0 : 320.0);
+        final titleSize = isDesktop ? 20.0 : (isTablet ? 18.0 : 16.0);
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 24.0 : 16.0,
-              ),
-              child: Text(
-                'Popular',
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontSize: isDesktop ? 32.0 : (isTablet ? 28.0 : 24.0),
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: imageHeight + 60,
-              child: _isLoading
+        return SizedBox(
+          height: imageHeight + 60,
+          child: _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                )
+              : _error != null
                   ? Center(
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).colorScheme.primary,
+                      child: Text(
+                        'Error: $_error',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     )
-                  : _error != null
-                      ? Center(
-                          child: Text(
-                            'Error: $_error',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.error,
-                            ),
-                          ),
-                        )
-                      : ListView.builder(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: isDesktop ? 24.0 : 16.0,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: _games.length,
-                          itemBuilder: (context, index) {
-                            final game = _games[index];
-                            return GameCard(
-                              game: game,
-                              width: cardWidth,
-                              imageHeight: imageHeight,
-                              titleSize: titleSize,
-                            );
-                          },
-                        ),
-            ),
-          ],
+                  : ListView.builder(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isDesktop ? 24.0 : 16.0,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _games.length,
+                      itemBuilder: (context, index) {
+                        final game = _games[index];
+                        return GameCard(
+                          game: game,
+                          width: cardWidth,
+                          imageHeight: imageHeight,
+                          titleSize: titleSize,
+                        );
+                      },
+                    ),
         );
       },
     );
