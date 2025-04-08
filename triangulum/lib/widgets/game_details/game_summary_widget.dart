@@ -46,6 +46,7 @@ class GameSummary extends StatelessWidget {
                 ),
                 child: Text(
                   summary,
+                  textAlign: TextAlign.justify,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     height: 1.5,
                     color: Theme.of(context).colorScheme.onSurface,
