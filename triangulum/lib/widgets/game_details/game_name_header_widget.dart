@@ -15,11 +15,13 @@ class GameNameHeader extends StatelessWidget {
         final isDesktop = constraints.maxWidth > 900;
         final isTablet = constraints.maxWidth > 600;
 
-        return Text(
-          name,
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(
-            fontSize: isDesktop ? 48 : (isTablet ? 36 : 28),
-            fontWeight: FontWeight.bold,
+        return Center(
+          child: Text(
+            name,
+            style: Theme.of(context).textTheme.displaySmall?.copyWith(
+              fontSize: isDesktop ? 48 : (isTablet ? 36 : 28),
+              fontWeight: FontWeight.bold,
+            ),
           ),
         );
       },
